@@ -1,5 +1,6 @@
 package com.example.myapplication.helpers
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -7,10 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db", null, 1) {
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(p0: SQLiteDatabase?) {
         val createTable = (""" CREATE TABLE USUARIO (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
             NAME TEXT,
+            TIPE TEXT,
             DESCRIPCION TEXT
             IMG TEXT
             )  """)
@@ -21,7 +24,7 @@ class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db",
 
     }
 
-    fun insertName(name : String, descripcion : String, img : String) : String{
+    fun insertName(name : String, descripcion : String, tipe : String, img : String) : String{
         val db = this.writableDatabase
         /*
         val contentValue = ContentValues().apply {
@@ -31,22 +34,23 @@ class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db",
         val contentValues = ContentValues()
         contentValues.put("NAME", name)
         contentValues.put("DESCRIPCION", descripcion)
+        contentValues.put("TIPE", tipe)
         contentValues.put("IMG", img)
         val result = db.insert("USUARIO",  null, contentValues  )
         return if (result == (-1).toLong()) "Existe una falla" else "Inserción correcta"
     }
 
     fun selectAllName() : MutableList<String>{
-        val nameList = mutableListOf<String>()
+        val userList = mutableListOf<String>()
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM NAMES", null)
         if(cursor.moveToFirst()){
             do {
-                val name = cursor.getString( cursor.getColumnIndexOrThrow("NAME") )
-                nameList.add(name)
+                val user = cursor.getString( cursor.getColumnIndexOrThrow("USUARIO") )
+                userList.add(user)
             }while (cursor.moveToNext())
         }
-        return nameList
+        return userList
     }
 
     fun updateName(id : String , name : String) : String{

@@ -11,26 +11,15 @@
         android:icon="@drawable/ic_launcher_background"
     />
     <item
-        android:id="@+id/nav_movie"
-        android:title="Movie"
+        android:id="@+id/nav_Register"
+        android:title="Register"
         android:icon="@drawable/ic_launcher_background"
         />
     <item
-        android:id="@+id/nav_other"
+        android:id="@+id/nav_lista"
         android:icon="@drawable/ic_launcher_background"
-        android:title="Otros"
+        android:title="Lista"
         >
-        <menu>
-            <item
-                android:id="@+id/nav_info"
-                android:title="About"
-                android:icon="@drawable/ic_launcher_background"
-            />
-            <item
-                android:id="@+id/nav_person"
-                android:title="Person"
-                android:icon="@drawable/ic_launcher_background"
-                />
-        </menu>
+
     </item>
 </menu>

@@ -1,28 +1,25 @@
 package com.segundoparcial
 
-import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapter.NombreAdapter
 import com.example.myapplication.helpers.DataBaseHelper
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.navigation.NavigationView
+import com.segundoparcial.view.HomeFragment
+import com.segundoparcial.view.ListFragment
+import com.segundoparcial.view.RegisterFragment
 
 class MainActivity : AppCompatActivity() {
     lateinit var toggle : ActionBarDrawerToggle
@@ -75,12 +72,15 @@ class MainActivity : AppCompatActivity() {
                     .addToBackStack(null)
                     .commit()
 
-                R.id.nav_movie ->supportFragmentManager.beginTransaction()
-                    .replace(R.id.fgContainer, MovieFragment())
+                R.id.nav_Register -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fgContainer, RegisterFragment())
                     .addToBackStack(null)
                     .commit()
-                R.id.nav_person-> Toast.makeText(this,"Hola person", Toast.LENGTH_SHORT).show()
-                R.id.nav_info -> Toast.makeText(this,"Hola info", Toast.LENGTH_SHORT).show()
+
+                R.id.nav_lista ->supportFragmentManager.beginTransaction()
+                    .replace(R.id.fgContainer, ListFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
