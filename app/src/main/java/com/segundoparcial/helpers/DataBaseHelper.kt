@@ -5,69 +5,81 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.segundoparcial.model.User
 
-class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db", null, 1) {
+class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "user.db", null, 1) {
 
+
+    companion object {
+        private const val TABLE_NAME = "USER"
+        private const val COLUMN_ID = "ID"
+        private const val COLUMN_NAME = "NAME"
+        private const val COLUMN_TYPE = "TYPE"
+        private const val COLUMN_DESCRIPTION = "DESCRIPTION"
+        private const val COLUMN_IMG = "IMG"
+    }
     @SuppressLint("SuspiciousIndentation")
-    override fun onCreate(p0: SQLiteDatabase?) {
-        val createTable = (""" CREATE TABLE USUARIO (
-            ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            NAME TEXT,
-            TIPE TEXT,
-            DESCRIPCION TEXT
-            IMG TEXT
-            )  """)
-            p0?.execSQL(createTable)
+    override fun onCreate(db: SQLiteDatabase?) {
+        val createTable = """
+            CREATE TABLE $TABLE_NAME (
+                $COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                $COLUMN_NAME TEXT,
+                $COLUMN_TYPE TEXT,
+                $COLUMN_DESCRIPTION TEXT,
+                $COLUMN_IMG TEXT
+            )
+        """
+        db?.execSQL(createTable)
     }
 
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
+    override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
 
     }
 
-    fun insertName(name : String, descripcion : String, tipe : String, img : String) : String{
+    fun insertName(user: User) : Long{
         val db = this.writableDatabase
-        /*
-        val contentValue = ContentValues().apply {
-            put("NAME", name)
+        val contentValues = ContentValues().apply {
+            put(COLUMN_NAME, user.name)
+            put(COLUMN_DESCRIPTION, user.description)
+            put(COLUMN_TYPE, user.type)
+            put(COLUMN_IMG, user.img)
         }
-        */
-        val contentValues = ContentValues()
-        contentValues.put("NAME", name)
-        contentValues.put("DESCRIPCION", descripcion)
-        contentValues.put("TIPE", tipe)
-        contentValues.put("IMG", img)
-        val result = db.insert("USUARIO",  null, contentValues  )
-        return if (result == (-1).toLong()) "Existe una falla" else "Inserción correcta"
+        return db.insert(TABLE_NAME, null, contentValues)
     }
 
-    fun selectAllName() : MutableList<String>{
-        val userList = mutableListOf<String>()
+    fun getAllUsers(): List<User> {
+        val userList = mutableListOf<User>()
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM NAMES", null)
-        if(cursor.moveToFirst()){
-            do {
-                val user = cursor.getString( cursor.getColumnIndexOrThrow("USUARIO") )
-                userList.add(user)
-            }while (cursor.moveToNext())
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME", null)
+        while (cursor.moveToNext()) {
+            val user = User(
+                id = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                type = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE)),
+                description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)),
+                img = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMG))
+            )
+            userList.add(user)
         }
+        cursor.close()
         return userList
     }
 
-    fun updateName(id : String , name : String) : String{
+    fun updateUser(user: User): Int {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put("NAME", name )
-        val result = db.update("NAMES", contentValues , "id=?", arrayOf(id) )
-        return if(result > 0) "Actualización exitosa" else "Error al actualizar"
+        val contentValues = ContentValues().apply {
+            put(COLUMN_NAME, user.name)
+            put(COLUMN_DESCRIPTION, user.description)
+            put(COLUMN_TYPE, user.type)
+            put(COLUMN_IMG, user.img)
+        }
+        return db.update(TABLE_NAME, contentValues, "$COLUMN_ID = ?", arrayOf(user.id.toString()))
     }
 
-    fun deleteName(id : String) : String{
+    fun deleteUser(userId: Long): Int {
         val db = this.writableDatabase
-        val result = db.delete("NAMES", "id=?", arrayOf(id))
-        return if(result > 0) "Eliminación exitosa" else "Error al eliminar"
+        return db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(userId.toString()))
     }
-
-
 }
 
 
