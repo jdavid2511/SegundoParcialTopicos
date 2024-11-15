@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper
 class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db", null, 1) {
 
     override fun onCreate(p0: SQLiteDatabase?) {
-        val createTable = (""" CREATE TABLE NAMES (
+        val createTable = (""" CREATE TABLE USUARIO (
             ID INTEGER PRIMARY KEY AUTOINCREMENT,
-            NAME TEXT
+            NAME TEXT,
+            DESCRIPCION TEXT
+            IMG TEXT
             )  """)
             p0?.execSQL(createTable)
     }
@@ -19,7 +21,7 @@ class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db",
 
     }
 
-    fun insertName(name : String) : String{
+    fun insertName(name : String, descripcion : String, img : String) : String{
         val db = this.writableDatabase
         /*
         val contentValue = ContentValues().apply {
@@ -28,8 +30,10 @@ class DataBaseHelper(context : Context)  : SQLiteOpenHelper(context, "names.db",
         */
         val contentValues = ContentValues()
         contentValues.put("NAME", name)
-        val result = db.insert("NAMES", null, contentValues  )
-        return if (result == (-1).toLong() ) "Existe una falla" else "Inserción correcta"
+        contentValues.put("DESCRIPCION", descripcion)
+        contentValues.put("IMG", img)
+        val result = db.insert("USUARIO",  null, contentValues  )
+        return if (result == (-1).toLong()) "Existe una falla" else "Inserción correcta"
     }
 
     fun selectAllName() : MutableList<String>{

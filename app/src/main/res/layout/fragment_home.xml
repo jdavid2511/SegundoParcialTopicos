@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="escriba_un_nombre"
             android:gravity="center_horizontal"
+            android:text="Registre sus datos"
             android:textSize="22sp" />
 
         <EditText
@@ -22,23 +23,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvName"
-            />
+            android:layout_marginTop="24dp"
+            android:hint="Nombres y apellidos" />
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_marginTop="16dp"
+        <EditText
+            android:id="@+id/etDescrip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/etName"
-            android:text="guardar"
-            />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvName"
+            android:layout_marginTop="24dp"
+            android:hint="Descripción" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnSave"
-            android:layout_marginTop="16dp"
-            />
+            android:gravity="center"
+            android:orientation="horizontal">
 
-    </RelativeLayout>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="principal" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Secundario" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Extra" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnLoad"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Cargar Imagen" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="guardar" />
+    </LinearLayout>
 </FrameLayout>

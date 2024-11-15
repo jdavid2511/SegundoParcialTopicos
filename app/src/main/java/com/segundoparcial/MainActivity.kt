@@ -1,11 +1,16 @@
 package com.segundoparcial
 
+import android.app.Activity
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -16,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapter.NombreAdapter
 import com.example.myapplication.helpers.DataBaseHelper
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -26,16 +32,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var dataBaseHelper: DataBaseHelper
     private lateinit var adapter : NombreAdapter
     private lateinit var etName : EditText
+    private lateinit var btnLoad : ImageButton
     private lateinit var btnSave : Button
     private lateinit var rvNameList: RecyclerView
+    private var imageUri : Uri?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        initUi(savedInstanceState)
         initComponet()
         initListener()
-        initUi(savedInstanceState)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -76,15 +84,10 @@ class MainActivity : AppCompatActivity() {
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
+
+
         }
 
-//        btnSave.setOnClickListener{
-//            val nombre = etName.text.toString()
-//            val mensaje = dataBaseHelper.insertName(nombre)
-//            etName.text.clear()
-//            Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
-//            actualizarList()
-//        }
     }
 
     private  fun initUi(savedInstanceState : Bundle?){
@@ -95,16 +98,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
-    fun initComponent(){
-        etName = findViewById(R.id.etName)
-        btnSave = findViewById(R.id.btnSave)
-        rvNameList = findViewById(R.id.rvName)
-        dataBaseHelper = DataBaseHelper(this)
-        adapter = NombreAdapter(nameList)
-        rvNameList.layoutManager= LinearLayoutManager(this )
-        rvNameList.adapter =adapter
 
-    }
 
     fun actualizarList () {
         val data = dataBaseHelper.selectAllName()
