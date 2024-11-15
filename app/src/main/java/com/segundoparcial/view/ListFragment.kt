@@ -21,4 +21,17 @@ class ListFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
+
+    /* fun actualizarList () {
+        val data = dataBaseHelper.selectAllName()
+        nameList.clear()
+        nameList.addAll(data)
+        adapter.notifyDataSetChanged()
+        rvNameList.scrollToPosition(nameList.count() - 1)
+    }
+
+    fun initUi(){
+        actualizarList()
+    }*/
+
 }

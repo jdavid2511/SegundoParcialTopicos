@@ -26,13 +26,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var drawerLayout : DrawerLayout
     lateinit var navView : NavigationView
     private  var nameList : MutableList<String> = mutableListOf()
-    private lateinit var dataBaseHelper: DataBaseHelper
     private lateinit var adapter : NombreAdapter
-    private lateinit var etName : EditText
-    private lateinit var btnLoad : ImageButton
-    private lateinit var btnSave : Button
     private lateinit var rvNameList: RecyclerView
-    private var imageUri : Uri?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +82,6 @@ class MainActivity : AppCompatActivity() {
 
 
         }
-
     }
 
     private  fun initUi(savedInstanceState : Bundle?){
@@ -98,18 +92,4 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
-
-
-    fun actualizarList () {
-        val data = dataBaseHelper.selectAllName()
-        nameList.clear()
-        nameList.addAll(data)
-        adapter.notifyDataSetChanged()
-        rvNameList.scrollToPosition(nameList.count() - 1)
-    }
-
-    fun initUi(){
-        actualizarList()
-    }
-
 }
