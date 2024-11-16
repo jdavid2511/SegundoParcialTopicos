@@ -13,7 +13,6 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.helpers.DataBaseHelper
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.segundoparcial.R
@@ -104,7 +103,8 @@ class RegisterFragment : Fragment() {
                 User(name = name, description = description, type = type, img = image.toString())
 
             dataBaseHelper.insertName(user)
-            Toast.makeText(context, "Usuario Resgistrado con exito", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,
+                getString(R.string.usuario_resgistrado_con_exito), Toast.LENGTH_SHORT).show()
 
             etName.text.clear()
             etDescription.text.clear()
@@ -135,19 +135,22 @@ class RegisterFragment : Fragment() {
     private fun validation(name: String, description: String, primary: Boolean, secundary: Boolean, extra: Boolean, image: Uri?) : Boolean {
         when {
             name.isEmpty() -> {
-                Toast.makeText(context , "Ingrese nombre", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context , getString(R.string.ingrese_nombre), Toast.LENGTH_SHORT).show()
                 return false
             }
             description.isEmpty() -> {
-                Toast.makeText(context , "Ingrese una descripcion", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context ,
+                    getString(R.string.ingrese_una_descripcion), Toast.LENGTH_SHORT).show()
                 return false
             }
             !primary && !secundary && !extra -> {
-                Toast.makeText(context , "Seleccione al menos un tipo", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context ,
+                    getString(R.string.seleccione_al_menos_un_tipo), Toast.LENGTH_SHORT).show()
                 return false
             }
             image == null -> {
-                Toast.makeText(context , "Seleccione una imagen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context ,
+                    getString(R.string.seleccione_una_imagen), Toast.LENGTH_SHORT).show()
                 return false
             }
             else -> {

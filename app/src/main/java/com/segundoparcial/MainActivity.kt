@@ -32,9 +32,9 @@ class MainActivity : AppCompatActivity() {
         tlMenu =  findViewById(R.id.tlMenu)
         vpFragment = findViewById(R.id.vpFragment)
         adapterFragment = TabPageAdapter(supportFragmentManager , lifecycle)
-        tlMenu.addTab(tlMenu.newTab().setText("Home"))
-        tlMenu.addTab(tlMenu.newTab().setText("Registro"))
-        tlMenu.addTab(tlMenu.newTab().setText("Lista"))
+        tlMenu.addTab(tlMenu.newTab().setText(getString(R.string.home)))
+        tlMenu.addTab(tlMenu.newTab().setText(getString(R.string.registro)))
+        tlMenu.addTab(tlMenu.newTab().setText(getString(R.string.lista)))
         vpFragment.adapter = adapterFragment
     }
 
