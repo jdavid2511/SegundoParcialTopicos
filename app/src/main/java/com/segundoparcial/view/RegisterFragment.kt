@@ -33,9 +33,9 @@ class RegisterFragment : Fragment() {
     private var type : String = ""
 
     companion object {
-        private const val PRIMARY = "PRIMARIO"
-        private const val SECUNDARY = "SECUNDARIO"
-        private const val EXTRA = "EXTRA"
+        private const val PRIMARY = "primario"
+        private const val SECUNDARY = "secundario"
+        private const val EXTRA = "extra"
     }
 
     override fun onCreateView(
@@ -102,8 +102,7 @@ class RegisterFragment : Fragment() {
             val user =
                 User(name = name, description = description, type = type, img = image.toString())
 
-            val result = dataBaseHelper.insertName(user)
-
+            dataBaseHelper.insertName(user)
             Toast.makeText(context, "Usuario Resgistrado con exito", Toast.LENGTH_SHORT).show()
 
             etName.text.clear()
