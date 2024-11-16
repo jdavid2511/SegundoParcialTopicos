@@ -65,6 +65,7 @@ class RegisterFragment : Fragment() {
         checkExtra = view.findViewById(R.id.checkExtra)
         btnLoad = view.findViewById(R.id.btnLoad)
         btnSave = view.findViewById(R.id.btnSave)
+        etName.requestFocus()
     }
 
 
